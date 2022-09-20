@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TracerLib
 {
-    internal class ThreadInfo
+    public class ThreadInfo
     {
         public int ThreadId { get; set; }
         public int Time { get; set; }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TracerLib
 {
-    internal class OutputData
+    public class OutputData
     {
-        public static Dictionary<ThreadInfo, List<MethodInfo>> ThreadInfos =
-            new Dictionary<ThreadInfo,List<MethodInfo>>();
+        //public static Dictionary<ThreadInfo, List<MethodInfo>> ThreadInfos =
+        //    new Dictionary<ThreadInfo,List<MethodInfo>>();
     }
 }

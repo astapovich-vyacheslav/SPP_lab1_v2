@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TracerLib
 {
-    internal class MethodInfo
+    public class MethodInfo
     {
         public int Time { get; set; }
         public string Name { get; set; }
@@ -19,6 +19,13 @@ namespace TracerLib
             Name = name;
             ClassName = className;
             InnerMethods = new List<MethodInfo>();
+        }
+
+        public MethodInfo(TraceResult traceResult)
+        {
+            Time = traceResult.Time;
+            Name = traceResult.MethodName;
+            ClassName = traceResult.ClassName;
         }
     }
 }

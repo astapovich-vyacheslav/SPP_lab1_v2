@@ -11,9 +11,24 @@ namespace lab1
 {
     public class Program
     {
+        //public static Dictionary<ThreadInfo, List<MethodInfo>> outputDictionary = 
+        //    new Dictionary<ThreadInfo, List<MethodInfo>>();
+        public static List<ThreadInfo> threadInfoList = new List<ThreadInfo>();
         public static void ThreadTest1()
         {
-
+            Stopwatch sw = Stopwatch.StartNew();
+            sw.Start();
+            TestMethods test = new TestMethods();
+            Tracer tracer = new Tracer("FastPower", test.GetType().ToString());
+            tracer.StartTrace();
+            test.SlowPower(2, 100000);
+            tracer.StopTrace();
+            TraceResult traceResult = tracer.GetTraceResult();
+            sw.Stop();
+            int threadTime = (int)sw.ElapsedMilliseconds;
+            ThreadInfo threadInfo = new ThreadInfo(Thread.CurrentThread.ManagedThreadId, threadTime);
+            MethodInfo methodInfo = new MethodInfo(traceResult);
+            threadInfo.AddMethodInfo(methodInfo);
         }
         public static void ThreadTest2()
         {

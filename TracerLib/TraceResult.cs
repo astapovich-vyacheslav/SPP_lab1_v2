@@ -8,11 +8,11 @@ namespace TracerLib
 {
     public class TraceResult
     {
-        public double Time { get; set; }
+        public int Time { get; set; }
         public string MethodName { get; set; }
         public string ClassName { get; set; }
 
-        public TraceResult(double time, string methodName, string className)
+        public TraceResult(int time, string methodName, string className)
         {
             Time = time;
             MethodName = methodName;
