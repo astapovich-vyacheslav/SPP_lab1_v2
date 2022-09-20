@@ -21,14 +21,15 @@ namespace lab1
             TestMethods test = new TestMethods();
             Tracer tracer = new Tracer(nameof(test.FastPower), test.GetType().ToString());
             tracer.StartTrace();
-            test.SlowPower(2, 100000);
+            test.FastPower(2, 100000);
             tracer.StopTrace();
             TraceResult traceResult = tracer.GetTraceResult();
             sw.Stop();
-            int threadTime = (int)sw.ElapsedMilliseconds;
+            int threadTime = (int)sw.ElapsedTicks;
             ThreadInfo threadInfo = new ThreadInfo(Thread.CurrentThread.ManagedThreadId, threadTime);
             MethodInfo methodInfo = new MethodInfo(traceResult);
             threadInfo.AddMethodInfo(methodInfo);
+            threadInfoList.Add(threadInfo);
             //Console.WriteLine($"{traceResult.ClassName} {traceResult.MethodName} {traceResult.Time}");
             traceResult.PrintResult();
         }
@@ -42,13 +43,25 @@ namespace lab1
         }
         public static void Main(string[] args)
         {
-            //Tracer tracer = new Tracer();
+            
+            //------------------------------------
             Thread thread1 = new Thread(ThreadTest1);
             Thread thread2 = new Thread(ThreadTest2);
             Thread thread3 = new Thread(ThreadTest3);
             thread1.Start();
             thread2.Start();
             thread3.Start();
+            thread1.Join();
+            thread2.Join();
+            thread3.Join();
+            //------------------------------------
+            Console.WriteLine(threadInfoList.ToString());
+            //OutputData outputData = new OutputData(threadInfoList);
+            Serializer serializer = new Serializer();
+            OutputData outputData = new OutputData();
+            outputData.threadInfo = threadInfoList;
+            Console.WriteLine(serializer.XmlSerialization(outputData));
+            Console.WriteLine(serializer.JsonSerialization(outputData));
         }
     }
 }

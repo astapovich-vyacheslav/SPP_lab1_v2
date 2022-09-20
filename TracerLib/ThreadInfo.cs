@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace TracerLib
 {
+    [Serializable]
     public class ThreadInfo
     {
         public int ThreadId { get; set; }
         public int Time { get; set; }
 
         public List<MethodInfo> Methods { get; set; }
-
+        public ThreadInfo() { }
         public ThreadInfo(int id, int time)
         {
             ThreadId = id;

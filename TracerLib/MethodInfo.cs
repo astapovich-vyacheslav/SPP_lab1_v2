@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace TracerLib
 {
+    [Serializable]
     public class MethodInfo
     {
-        public int Time { get; set; }
         public string Name { get; set; }
         public string ClassName { get; set; }
+        public int Time { get; set; }
         public List<MethodInfo> InnerMethods { get; set; }
 
         public MethodInfo(int time, string name, string className)
@@ -27,5 +28,6 @@ namespace TracerLib
             Name = traceResult.MethodName;
             ClassName = traceResult.ClassName;
         }
+        public MethodInfo() { }
     }
 }
