@@ -16,14 +16,18 @@ namespace TracerLib
         {
             MethodName = methodName;
             ClassName = className;
+            stopwatch = new Stopwatch();
         }
 
-        public Tracer() { }
+        public Tracer()
+        {
+            stopwatch = new Stopwatch();
+        }
 
         // вызывается в начале замеряемого метода
         public void StartTrace()
         {
-            stopwatch = new Stopwatch();
+            stopwatch.Reset();
             stopwatch.Start();
         }
 

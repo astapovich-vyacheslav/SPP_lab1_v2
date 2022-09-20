@@ -27,7 +27,11 @@ namespace TracerLib
             Time = traceResult.Time;
             Name = traceResult.MethodName;
             ClassName = traceResult.ClassName;
+            InnerMethods = new List<MethodInfo>();
         }
-        public MethodInfo() { }
+        public MethodInfo()
+        {
+            InnerMethods = new List<MethodInfo>();
+        }
     }
 }
