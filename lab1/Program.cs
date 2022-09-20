@@ -19,7 +19,7 @@ namespace lab1
             Stopwatch sw = Stopwatch.StartNew();
             sw.Start();
             TestMethods test = new TestMethods();
-            Tracer tracer = new Tracer("FastPower", test.GetType().ToString());
+            Tracer tracer = new Tracer(nameof(test.FastPower), test.GetType().ToString());
             tracer.StartTrace();
             test.SlowPower(2, 100000);
             tracer.StopTrace();
@@ -29,6 +29,8 @@ namespace lab1
             ThreadInfo threadInfo = new ThreadInfo(Thread.CurrentThread.ManagedThreadId, threadTime);
             MethodInfo methodInfo = new MethodInfo(traceResult);
             threadInfo.AddMethodInfo(methodInfo);
+            //Console.WriteLine($"{traceResult.ClassName} {traceResult.MethodName} {traceResult.Time}");
+            traceResult.PrintResult();
         }
         public static void ThreadTest2()
         {

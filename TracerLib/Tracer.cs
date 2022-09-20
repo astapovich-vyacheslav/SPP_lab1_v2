@@ -9,7 +9,7 @@ namespace TracerLib
 {
     public class Tracer : ITracer
     {
-        public double Time;
+        public int Time;
         public string MethodName, ClassName;
         public Stopwatch stopwatch { get; set; }
         public Tracer(string methodName, string className)
@@ -31,7 +31,7 @@ namespace TracerLib
         public void StopTrace()
         {
             stopwatch.Stop();
-            Time = stopwatch.ElapsedTicks;
+            Time = (int)stopwatch.ElapsedTicks;
         }
 
         // получить результаты измерений  
