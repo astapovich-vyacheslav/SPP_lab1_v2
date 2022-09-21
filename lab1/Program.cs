@@ -15,6 +15,11 @@ namespace lab1
         //    new Dictionary<ThreadInfo, List<MethodInfo>>();
         public static List<ThreadInfo> threadInfoList = new List<ThreadInfo>();
         public static TestMethods test = new TestMethods();
+        public static void ProgramMethod()
+        {
+            for (int i = 0; i < 10; i++)
+                Thread.Sleep(100);
+        }
         public static void JointAction(Action<int, int> method, string name)
         {
             Stopwatch sw = Stopwatch.StartNew();
@@ -50,13 +55,28 @@ namespace lab1
             tracer.StopTrace();
             TraceResult traceResult = tracer.GetTraceResult();
             //add second method
+            Tracer tracer2 = new Tracer(nameof(ProgramMethod), nameof(Program));
+            tracer2.StartTrace();
+            ProgramMethod();
+            tracer2.StopTrace();
+            TraceResult traceResult2 = tracer2.GetTraceResult();
             sw.Stop();
             int threadTime = (int)sw.ElapsedTicks;
             ThreadInfo threadInfo = new ThreadInfo(Thread.CurrentThread.ManagedThreadId, threadTime);
             MethodInfo methodInfo = new MethodInfo(traceResult);
+            MethodInfo methodInfo2 = new MethodInfo(traceResult2);
             methodInfo.InnerMethods = methodResult.InnerMethods;
             threadInfo.AddMethodInfo(methodInfo);
+            threadInfo.AddMethodInfo(methodInfo2);
             threadInfoList.Add(threadInfo);
+        }
+        public static void WriteToFile(string fileName, string str)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                byte[] buffer = Encoding.Default.GetBytes(str);
+                fs.Write(buffer);
+            }
         }
         public static void Main(string[] args)
         {
@@ -75,9 +95,12 @@ namespace lab1
             Serializer serializer = new Serializer();
             OutputData outputData = new OutputData();
             outputData.threadInfo = threadInfoList;
-            Console.WriteLine(serializer.XmlSerialization(outputData));
-            Console.WriteLine();
-            Console.WriteLine(serializer.JsonSerialization(outputData));
+            string XML = serializer.XmlSerialization(outputData);
+            string JSON = serializer.JsonSerialization(outputData);
+
+            Console.WriteLine($"{XML}\n\n{JSON}");
+            WriteToFile("XML.txt", XML);
+            WriteToFile("JSON.txt", JSON);
         }
     }
 }
