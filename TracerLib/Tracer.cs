@@ -11,7 +11,7 @@ namespace TracerLib
     {
         public int Time;
         public string MethodName, ClassName;
-        public Stopwatch stopwatch { get; set; }
+        private Stopwatch stopwatch { get; set; }
         public Tracer(string methodName, string className)
         {
             MethodName = methodName;
@@ -27,7 +27,6 @@ namespace TracerLib
         // вызывается в начале замеряемого метода
         public void StartTrace()
         {
-            stopwatch.Reset();
             stopwatch.Start();
         }
 
@@ -35,7 +34,7 @@ namespace TracerLib
         public void StopTrace()
         {
             stopwatch.Stop();
-            Time = (int)stopwatch.ElapsedTicks;
+            Time = (int)stopwatch.ElapsedMilliseconds;
         }
 
         // получить результаты измерений  
