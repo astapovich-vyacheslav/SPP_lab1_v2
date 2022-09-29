@@ -50,31 +50,29 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void Time_For_Separate_Methods_Equals_Time_For_Conjucted_Methods()
+        public void Method_Names_Are_Equal()
         {
-            TestMethods tests = new TestMethods();
-            Tracer tracer1 = new Tracer(nameof(tests.InternalMethod1), nameof(Tracer));
+            Tracer tracer1 = new Tracer(nameof(Program.ProgramMethod), nameof(Program));
             tracer1.StartTrace();
-            tests.InternalMethod1();
+            Program.ProgramMethod();
             tracer1.StopTrace();
 
-            Tracer tracer2 = new Tracer(nameof(tests.InternalMethod2), nameof(Tracer));
-            tracer2.StartTrace();
-            tests.InternalMethod2();
-            tracer2.StopTrace();
+            TraceResult result1 = tracer1.GetTraceResult();
 
-            Tracer tracer3 = new Tracer(nameof(tests.InternalMethod1), nameof(Tracer));
-            tracer3.StartTrace();
-            tests.InternalMethod1();
-            tests.InternalMethod2();
-            tracer3.StopTrace();
+            Assert.AreEqual("ProgramMethod", result1.MethodName);
+        }
 
-            TraceResult result1 = tracer1.GetTraceResult(), result2 = tracer2.GetTraceResult(), result3 = tracer3.GetTraceResult();
-            Console.WriteLine(result1.Time);
-            Console.WriteLine(result2.Time);
-            int separateTime = result1.Time + result2.Time;
-            int conjuctedTime = result3.Time;
-            Assert.IsTrue(separateTime < conjuctedTime + 10 && separateTime > conjuctedTime - 10);
+        [TestMethod]
+        public void Class_Names_Are_Equal()
+        {
+            Tracer tracer1 = new Tracer(nameof(Program.ProgramMethod), nameof(Program));
+            tracer1.StartTrace();
+            Program.ProgramMethod();
+            tracer1.StopTrace();
+
+            TraceResult result1 = tracer1.GetTraceResult();
+
+            Assert.AreEqual("Program", result1.ClassName);
         }
     }
 }

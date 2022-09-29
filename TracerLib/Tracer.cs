@@ -34,7 +34,7 @@ namespace TracerLib
         public void StopTrace()
         {
             stopwatch.Stop();
-            Time = (int)stopwatch.ElapsedMilliseconds;
+            Time = (int)stopwatch.ElapsedTicks;
         }
 
         // получить результаты измерений  
